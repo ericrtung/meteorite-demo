@@ -10,17 +10,14 @@ import HelloWorld from '@/components/HelloWorld.vue'
         density="compact"
       >
         <template v-slot:prepend>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         </template>
 
-        <v-app-bar-title>{{ "Some title from router" }}</v-app-bar-title>
-
-        <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
-        </template>
+        <v-app-bar-title>{{ $router.currentRoute.value?.meta?.title }}</v-app-bar-title>
       </v-app-bar>
-    <v-navigation-drawer>
 
+    <v-navigation-drawer v-model="drawer" temporary class="pa-4">
+      Possible site navigation items here
     </v-navigation-drawer>
 
     <v-main>
@@ -29,6 +26,14 @@ import HelloWorld from '@/components/HelloWorld.vue'
   </v-app>
 </template>
 
-<style>
+<script lang="ts">
+export default {
+  data: () => ({
+    drawer: false
+  }),
 
-</style>
+  mounted() {
+    console.log("App:mounted", this);
+  }
+}
+</script>

@@ -3,7 +3,7 @@ export interface Geolocation {
   coordinates: [number, number];
 }
 
-export interface Meteorite {
+export type Meteorite = {
   id: number,
   name: string,
   recclass: string,
@@ -22,7 +22,7 @@ export function parse(obj: any): Meteorite {
     id: +id,
     name,
     recclass,
-    mass: +mass,
+    mass: mass ? +mass : 0,
     fall,
     year: new Date(year).getFullYear(),
     reclat: +reclat,
