@@ -83,7 +83,7 @@ export const useMeteoriteStore = defineStore<string, MeteoriteState, MeteoriteGe
       return (this.data as Meteorite[]).filter(m => {
         return this.search == ""
           || m.id == +this.search
-          || m.name.toLocaleLowerCase().includes(this.search);
+          || m.name.toLocaleLowerCase().includes(this.search.toLocaleLowerCase());
       }); //.slice(0, 100);
     },
 
