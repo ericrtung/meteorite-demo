@@ -1,6 +1,6 @@
-# meteorite
+## Core Dependencies
 
-This template should help get you started developing with Vue 3 in Vite.
+Solution was built using Node.js version 16.15.1
 
 ## Recommended IDE Setup
 
