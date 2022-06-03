@@ -4,7 +4,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 
 import { useMeteoriteStore } from '@/stores/meteorite';
