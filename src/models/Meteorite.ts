@@ -3,30 +3,20 @@ export interface Geolocation {
   coordinates: [number, number];
 }
 
-export type Meteorite = {
-  id: number,
-  name: string,
-  recclass: string,
-  mass: number,
-  fall: string,
-  year: number,
-  reclat: number,
-  reclong: number,
-  geolocation: Geolocation
+export class Meteorite {
+  id          : number = 0;
+  name        : string = "";
+  recclass    : string = "";
+  mass        : number = 0;
+  fall        : number = 0;
+  year        : number = 0;
+  reclat      : number = 0;
+  reclong     : number = 0;
+  geolocation : Geolocation = { type: "", coordinates:[0,0] };
+
+  constructor(obj: Meteorite) { 
+    Object.assign(this, obj);
+    this.year = new Date(obj.year).getFullYear();
+  }
 }
 
-export function parse(obj: any): Meteorite {
-  const { id, name, recclass, mass, fall, year, reclat, reclong, geolocation } = obj;
-
-  return {
-    id: +id,
-    name,
-    recclass,
-    mass: mass ? +mass : 0,
-    fall,
-    year: new Date(year).getFullYear(),
-    reclat: +reclat,
-    reclong: +reclong,
-    geolocation
-  } as Meteorite;
-}

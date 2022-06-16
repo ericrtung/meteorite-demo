@@ -8,6 +8,7 @@ import L from 'leaflet'
 
 import { useMeteoriteStore } from '@/stores/meteorite';
 import type { Meteorite } from '@/models/Meteorite';
+import { storeToRefs } from 'pinia';
 
 const getLatLong = (m : Meteorite) : [number, number] => {
   return [m.geolocation.coordinates[1], m.geolocation.coordinates[0]];
@@ -20,21 +21,29 @@ export default defineComponent({
     let mapObject : L.Map | undefined;
     let meteorPinLayer : L.LayerGroup | undefined;
 
+    //const { search } = storeToRefs(useMeteoriteStore());
+    
     return { meteoriteStore, mapObject, meteorPinLayer };
   },
 
   beforeCreate() {
     this.meteorPinLayer = L.layerGroup([]);
 
-    this.meteoriteStore.$subscribe((mut, state) => {
-      //console.log({ mut, state });
+    // this.meteoriteStore.$subscribe((mut, state) => {
+    //   console.log({ mut, state });
 
-      // // https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
-      // if ((mut as any).payload?.data) {
-      //   this.mapMeteorites();
-      // }
+    //   // https://pinia.vuejs.org/core-concepts/state.html#subscribing-to-the-state
+    //   if ((mut as any).payload?.data) {
+    //     this.mapMeteorites();
+    //   }
 
-      // Looks like the easiest thing is to let the render update on every store touch rather than trying to filter on individual property mutations
+    // });
+    
+    this.$watch(() => this.meteoriteStore.data, () => {
+      this.mapMeteorites();
+    });
+
+    this.$watch(() => this.meteoriteStore.search, () => {
       this.mapMeteorites();
     });
   },
@@ -72,7 +81,8 @@ export default defineComponent({
 
       let pins = this.meteoriteStore.meteorites.reduce((arr, m) => {
         if (m.geolocation) {
-          arr.push(L.marker(getLatLong(m)));
+          let marker = L.marker(getLatLong(m)).bindPopup(`${m.name}`); 
+          arr.push(marker);
         }
         return arr;
       }, [] as L.Marker[]);

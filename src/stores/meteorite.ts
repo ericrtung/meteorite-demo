@@ -2,8 +2,7 @@ import { useStorage, type RemovableRef } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-import type { Meteorite } from '@/models/Meteorite'
-import { parse } from '@/models/Meteorite'
+import { Meteorite } from '@/models/Meteorite'
 
 export interface MeteoriteState {
   data: Meteorite[];
@@ -61,12 +60,10 @@ export const useMeteoriteStore = defineStore<string, MeteoriteState, MeteoriteGe
       this.data = [];
       this.loading = true;
       try {
-        // https://data.nasa.gov/resource/gh4g-9sfh.json // 1000 records? alternative link from website?
-        // https://data.nasa.gov/resource/y77d-th95.json // 1000 records
         const response = (await axios.get('https://data.nasa.gov/resource/y77d-th95.json')).data || []
 
         this.$patch({
-          data: response.map((e: any) => parse(e))
+          data: response.map((e: any) => new Meteorite(e))
         })
 
         //this.data = response.map((e: any) => parse(e));

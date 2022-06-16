@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import type { Meteorite } from '@/models/Meteorite';
 import { useMeteoriteStore } from '@/stores/meteorite';
-const meteoriteStore = useMeteoriteStore();
 
-const isFavorite = meteoriteStore.isFavorite;
-const toggleFavorite = meteoriteStore.toggleFavorite;
+const { toggleFavorite, isFavorite } = useMeteoriteStore();
 
 defineProps<{
   meteorite: Meteorite,
